@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 443;
+const PORT = process.env.PORT || 80;
 
 const httpsOptions = {
   key: fs.readFileSync(path.join(__dirname, "cert/kitshy.dpdns.org-key.pem")),
@@ -153,6 +153,7 @@ app.post("/send", async (req, res) => {
 });
 
 // Start server
-https.createServer(httpsOptions, app).listen(PORT, () => {
-  console.log(`HTTPS server running at https://0.0.0.0:${PORT}`);
+http.createServer(app).listen(PORT, () => {
+  console.log(`HTTP server running at http://0.0.0.0:${PORT}`);
+});
 });
