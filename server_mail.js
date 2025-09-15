@@ -156,4 +156,3 @@ app.post("/send", async (req, res) => {
 http.createServer(app).listen(PORT, () => {
   console.log(`HTTP server running at http://0.0.0.0:${PORT}`);
 });
-});
