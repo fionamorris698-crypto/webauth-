@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node serve_mail.js"
+    "start": "node server_mail.js"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
