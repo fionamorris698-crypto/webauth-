@@ -18,11 +18,11 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 80;
 
-const httpsOptions = {
-  key: fs.readFileSync(path.join(__dirname, "cert/kitshy.dpdns.org-key.pem")),
-  cert: fs.readFileSync(path.join(__dirname, "cert/kitshy.dpdns.org-crt.pem")),
-  ca: fs.readFileSync(path.join(__dirname, "cert/kitshy.dpdns.org-chain.pem"))
-};
+//const httpsOptions = {
+  //key: fs.readFileSync(path.join(__dirname, "cert/kitshy.dpdns.org-key.pem")),
+  //cert: fs.readFileSync(path.join(__dirname, "cert/kitshy.dpdns.org-crt.pem")),
+//  ca: fs.readFileSync(path.join(__dirname, "cert/kitshy.dpdns.org-chain.pem"))
+//};
 
 // Middleware
 app.use(bodyParser.json());
